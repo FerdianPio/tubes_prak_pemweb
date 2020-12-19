@@ -1,56 +1,15 @@
-
-
-<?php
-extract($_POST);
-if(isset($name_submit)){
-    $updateName="UPDATE user SET full_name='$nameEdit' where username='$username'";
-    mysqli_query($con,$updateName);
-}
-if(isset($birth_submit)){
-    $updateBirth="UPDATE user SET tanggal='$birthEdit' where username='$username'";
-    mysqli_query($con,$updateBirth);
-}
-if(isset($gender_submit)){
-    $updateGender="UPDATE user SET gender='$genderEdit' where username='$username'";
-    mysqli_query($con,$updateGender);
-}
-if(isset($email_submit)){
-    $updateEmail="UPDATE user SET email='$emailEdit' where username='$username'";
-    mysqli_query($con,$updateEmail);
-}
-if(isset($HP_submit)){
-    $updateHP="UPDATE user SET HP='$HPEdit' where username='$username'";
-    mysqli_query($con,$updateHP);
-}
-if(isset($pict_submit)){
-    if($row['pict']!="assets/images/profile-default.png"){
-        unlink($row['pict']);
-    }
-    $uploaddir="images-profile/";
-    $uploadfile=$uploaddir.$_FILES['pictEdit']['name'];
-    move_uploaded_file($_FILES['pictEdit']['tmp_name'],$uploadfile);
-    $updatePict="UPDATE user SET pict='$uploadfile' where username='$username'";
-    mysqli_query($con,$updatePict);
-}
-if(isset($pass_submit)){
-    $updatePass="UPDATE user SET passw='$passEdit' where username='$username'";
-    mysqli_query($con,$updatePass);
-}
-?>
-
-
-        <div class="col-12">
-            <div class="row">
-                <h2 style="padding-left: 20px;"><i class="fa fa-user-o"></i></h2>
-                <h4 style="padding-top:8px;padding-left:20px;">   <?php echo $row['username'];?></h4>
-                </div>
-                <hr style="border:4px solid gray;">
-            </div>
+<div class="col-12">
+    <div class="row">
+        <h2 style="padding-left: 20px;"><i class="fa fa-user-o"></i></h2>
+        <h4 style="padding-top:8px;padding-left:20px;">   <?php echo $row['username'];?></h4>
+    </div>
+    <hr style="border:4px solid gray;">
+</div>
             
             <!--Left Bio-->
             <div class="col-6" style="padding-top: 20px;">
                 <div class="card bg-secondary" style="margin-bottom:20px;">
-                    <img src="<?php echo $row['pict'];?>" class="card-img" alt="avatar" style="padding: 20px;" height="300px">
+                    <img src="<?php $_SESSION['pict']=$row['pict'];echo $row['pict'];?>" class="card-img" alt="avatar" style="padding: 20px;" height="300px">
                     <div class="card-body">
                         <button type="button" class="btn btn-light btn-block" data-toggle="modal" data-target="#pictMod">Pilih foto</button>
                     </div>
@@ -127,7 +86,7 @@ if(isset($pass_submit)){
             </button>
         </div>
         <div class="modal-body">
-            <form method="post">
+            <form method="post" action="getProfileEdit.php">
                 <div class="form-group">
                     <label for="nameEdit">Name</label>
                     <input type="text" class="form-control" id="nameEdit" name="nameEdit">
@@ -150,7 +109,7 @@ if(isset($pass_submit)){
             </button>
         </div>
         <div class="modal-body">
-            <form method="post">
+            <form method="post" action="getProfileEdit.php">
                 <div class="form-group">
                     <label for="birthEdit">Birth</label>
                     <input type="date" class="form-control" id="birthEdit" name="birthEdit">
@@ -173,7 +132,7 @@ if(isset($pass_submit)){
             </button>
         </div>
         <div class="modal-body">
-            <form method="post">
+            <form method="post" action="getProfileEdit.php">
                 <div class="form-group row">
                     <input type="radio" name="genderEdit" id="pria" value="Pria">
                     <label for="pria">Pria</label>
@@ -199,7 +158,7 @@ if(isset($pass_submit)){
             </button>
         </div>
         <div class="modal-body">
-            <form method="post">
+            <form method="post" action="getProfileEdit.php">
                 <div class="form-group">
                     <label for="emailEdit">Email</label>
                     <input type="email" class="form-control" id="emailEdit" name="emailEdit">
@@ -222,7 +181,7 @@ if(isset($pass_submit)){
             </button>
         </div>
         <div class="modal-body">
-            <form method="post">
+            <form method="post" action="getProfileEdit.php">
                 <div class="form-group">
                     <label for="nameEdit">Nomor HP</label>
                     <input type="text" class="form-control" id="HPEdit" name="HPEdit">
@@ -245,8 +204,9 @@ if(isset($pass_submit)){
             </button>
         </div>
         <div class="modal-body">
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" action="getProfileEdit.php" enctype="multipart/form-data">
                 <div class="form-group">
+                    <input type="hidden" name="picture">
                     <label for="pictEdit">Add new password instead</label>
                     <input type="file" accept="image/*" class="form-control-file" id="pictEdit" name="pictEdit">
                 </div>
@@ -269,7 +229,7 @@ if(isset($pass_submit)){
             </button>
         </div>
         <div class="modal-body">
-            <form method="post">
+            <form method="post" action="getProfileEdit.php">
                 <div class="form-group">
                     <label for="passEdit">Add new password instead</label>
                     <input type="password" class="form-control" id="passEdit" name="passEdit">

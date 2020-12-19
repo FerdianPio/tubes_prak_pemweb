@@ -1,6 +1,8 @@
 <?php
 require('dbscript.php');
-$username="User";
+$username="Pioboy";
+session_start();
+$_SESSION['username']=$username;
 $queryselect="SELECT * from user WHERE username = '$username'";
     
 $result=mysqli_query($con, $queryselect);
@@ -9,8 +11,6 @@ if (mysqli_num_rows($result) > 0) {
 } else {
     echo "no user";
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -55,15 +55,5 @@ if (mysqli_num_rows($result) > 0) {
         </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>
